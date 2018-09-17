@@ -9,7 +9,7 @@ def Move_01():
     x,y=203,535
     clear_canvas()
     grass.draw(400, 30)
-    character.clip_draw(100, 300, 100, 100, x, y)
+    character.clip_draw(100, 200, 100, 100, x, y)
     update_canvas()
     delay(1)
     get_events()
