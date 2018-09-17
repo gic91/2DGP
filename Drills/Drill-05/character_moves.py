@@ -24,18 +24,18 @@ def Move_01():
 def Move_02():
     x, y = 203, 535
     count = 0
-    while count < 10:
-        clear_canvas()
-        grass.draw(400, 30)
-        character.clip_draw(100, 200, 100, 100, x, y)
-        update_canvas()
-        divine_x = (x - 132) // 10
-        divine_y = (243 - y) // 10
-        x = x - divine_x
-        y = y + divine_y
-        count += 1
-        delay(0.1)
-        get_events()
+    while count<150:
+         clear_canvas()
+         grass.draw(400, 30)
+         character.clip_draw(100, 200, 100, 100, x, y)
+         update_canvas()
+         divine_x = (x- 132) /50
+         divine_y = (243- y) /50
+         x = x-divine_x
+         y = y+divine_y
+         count+=1
+         delay(0.01)
+         get_events()
 
 def Move_03():
     x, y = 535, 470
@@ -105,7 +105,7 @@ def Move_10():
     get_events()
 
 while True:
-    Move_01()
+    #Move_01()
     Move_02()
     #Move_03()
     #Move_04()
