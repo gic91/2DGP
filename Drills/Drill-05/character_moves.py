@@ -150,7 +150,7 @@ def Move_10():
     while count < 150:
         clear_canvas()
         grass.draw(400, 30)
-        character.clip_draw(100, 200, 100, 100, x, y)
+        character.clip_draw(100, 300, 100, 100, x, y)
         update_canvas()
         divine_x = (x - 712) / 50
         divine_y = (349 - y) / 50
@@ -161,14 +161,14 @@ def Move_10():
         get_events()
 
 while True:
-    #Move_01()
-    #Move_02()
-    #Move_03()
-    #Move_04()
-    #Move_05()
-    #Move_06()
-    #Move_07()
-    #Move_08()
+    Move_01()
+    Move_02()
+    Move_03()
+    Move_04()
+    Move_05()
+    Move_06()
+    Move_07()
+    Move_08()
     Move_09()
     Move_10()
 
