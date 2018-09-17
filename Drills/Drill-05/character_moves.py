@@ -56,9 +56,15 @@ def Move_06():
     update_canvas()
     delay(1)
     get_events()
-    pass
+
 def Move_07():
-    pass
+    x, y = 510, 92
+    clear_canvas()
+    grass.draw(400, 30)
+    character.clip_draw(100, 300, 100, 100, x, y)
+    update_canvas()
+    delay(1)
+    get_events()
 def Move_08():
     pass
 def Move_09():
@@ -72,8 +78,8 @@ while True:
    # Move_03()
     #Move_04()
     #Move_05()
-    Move_06()
-    #Move_07()
+    #Move_06()
+    Move_07()
    # Move_08()
     #Move_09()
    # Move_10()
