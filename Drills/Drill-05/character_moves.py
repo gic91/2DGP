@@ -161,16 +161,16 @@ def Move_10():
         get_events()
 
 while True:
-    Move_01()
-    Move_02()
-    Move_03()
-    Move_04()
-    Move_05()
-    Move_06()
-    Move_07()
-    Move_08()
-    Move_09()
-    Move_10()
+     Move_01()
+     Move_02()
+     Move_03()
+     Move_04()
+     Move_05()
+     Move_06()
+     Move_07()
+     Move_08()
+     Move_09()
+     Move_10()
 
 
 close_canvas()
