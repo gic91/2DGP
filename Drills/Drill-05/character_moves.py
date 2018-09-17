@@ -11,7 +11,7 @@ def Move_01():
     grass.draw(400, 30)
     character.clip_draw(100, 200, 100, 100, x, y)
     update_canvas()
-    delay(1)
+    delay(0.5)
     get_events()
 
 def Move_02():
@@ -20,7 +20,7 @@ def Move_02():
     grass.draw(400, 30)
     character.clip_draw(100, 200, 100, 100, x, y)
     update_canvas()
-    delay(1)
+    delay(0.5)
     get_events()
 
 def Move_03():
@@ -29,7 +29,7 @@ def Move_03():
     grass.draw(400, 30)
     character.clip_draw(100, 300, 100, 100, x, y)
     update_canvas()
-    delay(1)
+    delay(0.5)
     get_events()
 def Move_04():
     x, y = 477, 203
@@ -37,7 +37,7 @@ def Move_04():
     grass.draw(400, 30)
     character.clip_draw(100, 200, 100, 100, x, y)
     update_canvas()
-    delay(1)
+    delay(0.5)
     get_events()
 
 def Move_05():
@@ -46,7 +46,7 @@ def Move_05():
     grass.draw(400, 30)
     character.clip_draw(100, 300, 100, 100, x, y)
     update_canvas()
-    delay(1)
+    delay(0.5)
     get_events()
 def Move_06():
     x, y = 316, 225
@@ -54,7 +54,7 @@ def Move_06():
     grass.draw(400, 30)
     character.clip_draw(100, 200, 100, 100, x, y)
     update_canvas()
-    delay(1)
+    delay(0.5)
     get_events()
 
 def Move_07():
@@ -63,7 +63,7 @@ def Move_07():
     grass.draw(400, 30)
     character.clip_draw(100, 300, 100, 100, x, y)
     update_canvas()
-    delay(1)
+    delay(0.5)
     get_events()
 def Move_08():
     x, y = 692, 518
@@ -71,7 +71,7 @@ def Move_08():
     grass.draw(400, 30)
     character.clip_draw(100, 300, 100, 100, x, y)
     update_canvas()
-    delay(1)
+    delay(0.5)
     get_events()
 def Move_09():
     x, y = 682, 336
@@ -79,7 +79,7 @@ def Move_09():
     grass.draw(400, 30)
     character.clip_draw(100, 200, 100, 100, x, y)
     update_canvas()
-    delay(1)
+    delay(0.5)
     get_events()
 def Move_10():
     x, y = 712, 349
@@ -87,7 +87,7 @@ def Move_10():
     grass.draw(400, 30)
     character.clip_draw(100, 300, 100, 100, x, y)
     update_canvas()
-    delay(1)
+    delay(0.5)
     get_events()
 
 while True:
