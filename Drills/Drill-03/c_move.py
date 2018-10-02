@@ -14,10 +14,13 @@ th = math.radians(3.14)
 r=230
 check =0
 check2 = 0
-while(True):
-      clear_canvas_now()
-      grass.draw_now(400,30)
-      character.draw_now(x,y)
+out = 0
+while(out<1000):
+      out+=1
+      clear_canvas()
+      grass.draw(400,30)
+      character.draw(x,y)
+      update_canvas()
       if count ==0:
             if x==780 and y==90:#right
                   right = 1
@@ -55,6 +58,7 @@ while(True):
                   x+=2
             delay(0.001)
       elif count == 1:
+            out+=1
             x =400+ r * math.cos(th)
             y =300+ r * math.sin(th)
             th+=1
@@ -69,5 +73,4 @@ while(True):
             delay(0.1)
             
 
-    
 close_canvas()

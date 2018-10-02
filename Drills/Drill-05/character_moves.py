@@ -13,9 +13,9 @@ def Move_01():
          grass.draw(400, 30)
          character.clip_draw(100, 200, 100, 100, x, y)
          update_canvas()
-         divine_x = (x- 203) /50
+         divine_x = (203-x) /50
          divine_y = (535- y) /50
-         x = x-divine_x
+         x = x+divine_x
          y = y+divine_y
          count+=1
          delay(0.01)
