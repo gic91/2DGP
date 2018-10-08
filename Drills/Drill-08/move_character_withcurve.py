@@ -17,21 +17,19 @@ def handle_events():
             running = False
 
 
-size = 10
-points_x = [(random.randint(0, 1000)) for i in range(size)]
-points_y = [(random.randint(0, 1000)) for i in range(size)]
-points = [(random.randint(0, 1000),random.randint(0, 1000)) for i in range(size)]
+size = 12
+points_x = [(random.randint(0, 800)) for i in range(size)]
+points_y = [(random.randint(0, 800)) for i in range(size)]
+points = [(random.randint(100, 800),random.randint(0, 1000)) for i in range(size)]
 r = 1
 frame = 0
 while True:
     for i in range(0, 100 + 1 , 3):
         t = i / 100
-        x = ((-t ** 3 + 2 * t ** 2 - t) * points[r-1][0] + (3 * t ** 3 - 5 * t ** 2 + 2) * points[r][0] + (
-                -3 * t ** 3 + 4 * t ** 2 + t) *
-             points[r+1][0] + (t ** 3 - t ** 2) * points[r+2][0]) / 2
-        y = ((-t ** 3 + 2 * t ** 2 - t) * points[r-1][1] + (3 * t ** 3 - 5 * t ** 2 + 2) * points[r][1] + (
-                -3 * t ** 3 + 4 * t ** 2 + t) *
-             points[r+1][1] + (t ** 3 - t ** 2) * points[r+2][1]) / 2
+        character_x = ((-t ** 3 + 2 * t ** 2 - t) * p[j][0] + (3 * t ** 3 - 5 * t ** 2 + 2) * p[(j + 1) % (size)][0] + (
+                -3 * t ** 3 + 4 * t ** 2 + t) * p[(j + 2) % (size)][0] + (t ** 3 - t ** 2) * p[(j + 3) % (size)][0]) / 2
+        character_y = ((-t ** 3 + 2 * t ** 2 - t) * p[j][1] + (3 * t ** 3 - 5 * t ** 2 + 2) * p[(j + 1) % (size)][1] + (
+                -3 * t ** 3 + 4 * t ** 2 + t) * p[(j + 2) % (size)][1] + (t ** 3 - t ** 2) * p[(j + 3) % (size)][1]) / 2
         clear_canvas()
         kpu_ground.draw(KPU_WIDTH // 2, KPU_HEIGHT // 2)
         if points_x[r-1] < points_x[r]:
@@ -42,7 +40,8 @@ while True:
         handle_events()
         update_canvas()
         delay(0.05)
-    r = (r + 1) % 10
+    r = (r+1) % 10
+
 
 
 
