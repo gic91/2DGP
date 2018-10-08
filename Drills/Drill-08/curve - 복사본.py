@@ -112,6 +112,7 @@ def draw_curve_4_points(p1, p2, p3, p4,p5):
              p5[0] +(t ** 3 - t ** 2) * p1[0]) / 2
         y = ((-t ** 3 + 2 * t ** 2 - t) * p3[1] + (3 * t ** 3 - 5 * t ** 2 + 2) * p4[1] + (-3 * t ** 3 + 4 * t ** 2 + t) *
              p5[1] +(t ** 3 - t ** 2) * p1[1]) / 2
+        
         draw_point((x, y))
     draw_point(p5)
     # draw p5-p1
