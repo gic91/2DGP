@@ -26,12 +26,12 @@ frame = 0
 while True:
     for i in range(0, 100 + 1 , 3):
         t = i / 100
-        x = ((-t ** 3 + 2 * t ** 2 - t) * points[0][0] + (3 * t ** 3 - 5 * t ** 2 + 2) * points[1][0] + (
+        x = ((-t ** 3 + 2 * t ** 2 - t) * points[r-1][0] + (3 * t ** 3 - 5 * t ** 2 + 2) * points[r][0] + (
                 -3 * t ** 3 + 4 * t ** 2 + t) *
-             points[2][0] + (t ** 3 - t ** 2) * points[3][0]) / 2
-        y = ((-t ** 3 + 2 * t ** 2 - t) * points[0][1] + (3 * t ** 3 - 5 * t ** 2 + 2) * points[1][1] + (
+             points[r+1][0] + (t ** 3 - t ** 2) * points[r+2][0]) / 2
+        y = ((-t ** 3 + 2 * t ** 2 - t) * points[r-1][1] + (3 * t ** 3 - 5 * t ** 2 + 2) * points[r][1] + (
                 -3 * t ** 3 + 4 * t ** 2 + t) *
-             points[2][1] + (t ** 3 - t ** 2) * points[3][1]) / 2
+             points[r+1][1] + (t ** 3 - t ** 2) * points[r+2][1]) / 2
         clear_canvas()
         kpu_ground.draw(KPU_WIDTH // 2, KPU_HEIGHT // 2)
         if points_x[r-1] < points_x[r]:
@@ -42,7 +42,7 @@ while True:
         handle_events()
         update_canvas()
         delay(0.05)
-    r = (r + 1) % size
+    r = (r + 1) % 10
 
 
 
