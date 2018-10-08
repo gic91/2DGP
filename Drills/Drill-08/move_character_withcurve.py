@@ -24,23 +24,24 @@ points = [(random.randint(100, 800),random.randint(0, 1000)) for i in range(size
 r = 1
 frame = 0
 while True:
-    for i in range(0, 100 + 1 , 3):
-        t = i / 100
-        character_x = ((-t ** 3 + 2 * t ** 2 - t) * p[j][0] + (3 * t ** 3 - 5 * t ** 2 + 2) * p[(j + 1) % (size)][0] + (
-                -3 * t ** 3 + 4 * t ** 2 + t) * p[(j + 2) % (size)][0] + (t ** 3 - t ** 2) * p[(j + 3) % (size)][0]) / 2
-        character_y = ((-t ** 3 + 2 * t ** 2 - t) * p[j][1] + (3 * t ** 3 - 5 * t ** 2 + 2) * p[(j + 1) % (size)][1] + (
-                -3 * t ** 3 + 4 * t ** 2 + t) * p[(j + 2) % (size)][1] + (t ** 3 - t ** 2) * p[(j + 3) % (size)][1]) / 2
-        clear_canvas()
-        kpu_ground.draw(KPU_WIDTH // 2, KPU_HEIGHT // 2)
-        if points_x[r-1] < points_x[r]:
-            character.clip_draw(frame * 100, 100, 100, 100, x, y)
-        else:
-            character.clip_draw(frame * 100, 0, 100, 100, x, y)
-        frame=(frame+1) % 6;
-        handle_events()
-        update_canvas()
-        delay(0.05)
-    r = (r+1) % 10
+    for j in range(0, size):
+     for i in range(0, 100 + 1 , 3):
+            t = i / 100
+            x = ((-t ** 3 + 2 * t ** 2 - t) * points[j][0] + (3 * t ** 3 - 5 * t ** 2 + 2) * points[(j + 1) % (size)][0] + (
+                    -3 * t ** 3 + 4 * t ** 2 + t) * points[(j + 2) % (size)][0] + (t ** 3 - t ** 2) * points[(j + 3) % (size)][0]) / 2
+            y = ((-t ** 3 + 2 * t ** 2 - t) * points[j][1] + (3 * t ** 3 - 5 * t ** 2 + 2) * points[(j + 1) % (size)][1] + (
+                    -3 * t ** 3 + 4 * t ** 2 + t) * points[(j + 2) % (size)][1] + (t ** 3 - t ** 2) * points[(j + 3) % (size)][1]) / 2
+            clear_canvas()
+            kpu_ground.draw(KPU_WIDTH // 2, KPU_HEIGHT // 2)
+            if points_x[r-1] < points_x[r]:
+                character.clip_draw(frame * 100, 100, 100, 100, x, y)
+            else:
+                character.clip_draw(frame * 100, 0, 100, 100, x, y)
+            frame=(frame+1) % 6;
+            handle_events()
+            update_canvas()
+            delay(0.05)
+
 
 
 
