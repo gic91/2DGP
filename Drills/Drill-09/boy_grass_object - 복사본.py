@@ -32,11 +32,11 @@ class Boy:
         self.image.clip_draw(self.frame*100,0,100,100,self.x,self.y)
 class Ball:
     def __init__(self):
-        self.x, self.y = random.randint(100,700),600
+        self.x, self.y = random.randint(100, 700), 600
         self.image_small = load_image('ball21x21.png')
         self.image_big = load_image('ball41x41.png')
-        self.random_move=random.randint(3,10)
-        self.ball_shape =random.randint(1,2)
+        self.random_move = random.randint(3, 10)
+        self.ball_shape = random.randint(1, 2)
     def update(self):
         if self.y <=70:
             self.y=70
