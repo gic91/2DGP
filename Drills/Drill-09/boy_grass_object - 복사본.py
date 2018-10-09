@@ -33,14 +33,19 @@ class Boy:
 class Ball:
     def __init__(self):
         self.x, self.y = random.randint(100,700),600
-        self.image = load_image('ball21x21.png')
+        self.image_small = load_image('ball21x21.png')
+        self.image_big = load_image('ball41x41.png')
         self.random_move=random.randint(3,10)
-
+        self.ball_shape =random.randint(1,2)
     def update(self):
         self.y -=self.random_move
 
     def draw(self):
-        self.image.draw(self.x, self.y)
+        if self.ball_shape==1:
+            self.image_small.draw(self.x, self.y)
+
+        else:
+            self.image_big.draw(self.x, self.y)
 # initialization code
 open_canvas()
 
