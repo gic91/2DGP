@@ -38,7 +38,11 @@ class Ball:
         self.random_move=random.randint(3,10)
         self.ball_shape =random.randint(1,2)
     def update(self):
-        self.y -=self.random_move
+        if self.y <=70:
+            self.y=70
+
+        else:
+            self.y -=self.random_move
 
     def draw(self):
         if self.ball_shape==1:
