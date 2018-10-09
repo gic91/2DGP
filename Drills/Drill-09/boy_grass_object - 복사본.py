@@ -33,15 +33,14 @@ class Boy:
 class Ball:
     def __init__(self):
         self.x, self.y = random.randint(100,700),600
-        self.image = load_image('run_animation.png')
+        self.image = load_image('ball21x21.png')
         self.random_move=random.randint(3,10)
 
     def update(self):
-        self.frame = (self.frame+1) %8
         self.y -=self.random_move
 
     def draw(self):
-        self.image.clip_draw(self.frame*100,0,100,100,self.x,self.y)
+        self.image.draw(self.x, self.y)
 # initialization code
 open_canvas()
 
@@ -55,13 +54,16 @@ while running:
 
     for boy in team:
         boy.update()
-
+    for Ball in Balls:
+        Ball.update()
 
     clear_canvas()
     grass.draw()
     for boy in team:
         boy.draw()
 
+    for Ball in Balls:
+        Ball.draw()
     update_canvas()
 
     delay(0.05)
