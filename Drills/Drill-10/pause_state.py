@@ -34,14 +34,14 @@ def handle_events():
 
 
 def draw():
-    global  count
+    global count
 
-    if count%10 <=5 :
+    if count % 10 <= 5:
 
-        image.draw(400,300)
+        image.draw(400, 300)
     else:
-        image2.draw(400,300)
+        image2.draw(400, 300)
     count += 1
     update_canvas()
     delay(0.1)
-    pass
+
