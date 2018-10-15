@@ -5,17 +5,19 @@ import main_state
 
 name = "TitleState"
 image = None
+image_2=None
 count = 0
 
 def enter():
-    global image, image2
+    global image, image_2
     image = load_image('pause.png')
-    image2 = load_image('erase.png')
+    image_2 = load_image('erase.png')
+
 
 def exit():
-    global image,image2
+    global image,image_2
     del(image)
-    del(image2)
+    del(image_2)
 def update():
     pass
 
@@ -40,7 +42,7 @@ def draw():
 
         image.draw(400, 300)
     else:
-        image2.draw(400, 300)
+        image_2.draw(400, 300)
     count += 1
     update_canvas()
     delay(0.1)
