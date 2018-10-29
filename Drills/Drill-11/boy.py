@@ -4,7 +4,7 @@ from ball import Ball
 import game_world
 
 # Boy Event
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SLEEP_TIMER ,DASH_DOWN, DASH_UP, SPACE = range(8)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SLEEP_TIMER ,DASH_DOWN, DASH_UP, DASH_REMOVE,SPACE = range(9)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
@@ -77,11 +77,11 @@ class RunState:
 
     @staticmethod
     def do(boy):
+
         boy.frame = (boy.frame + 1)%8
         boy.timer -= 1
         boy.x += boy.velocity
         boy.x = clamp(25, boy.x, 1600 - 25)
-
 
     @staticmethod
     def draw(boy):
@@ -105,7 +105,7 @@ class DashState:
         elif event == LEFT_UP:
             boy.velocity += 1
         boy.dir = boy.velocity
-
+        boy.timer = 200
     @staticmethod
     def exit(boy, event):
         if event == SPACE:
@@ -116,8 +116,11 @@ class DashState:
     def do(boy):
         boy.frame = (boy.frame + 1) % 8
         boy.timer -= 1
-        boy.x += boy.velocity*2
+        boy.x += boy.velocity*3
         boy.x = clamp(25, boy.x, 1600 - 25)
+
+        if boy.timer == 0:
+           boy.add_event(DASH_REMOVE)
 
     @staticmethod
     def draw(boy):
@@ -149,20 +152,20 @@ class SleepState:
 
 next_state_table = {
     IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState,
-    RIGHT_DOWN: RunState, LEFT_DOWN: RunState, SLEEP_TIMER : SleepState, DASH_DOWN: IdleState, DASH_UP: IdleState,
+    RIGHT_DOWN: RunState, LEFT_DOWN: RunState, SLEEP_TIMER : SleepState, DASH_DOWN: DashState, DASH_UP: IdleState,
                 SPACE : IdleState},
 
     RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState,
-    LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, DASH_DOWN: DashState, DASH_UP: IdleState,
+    LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState, DASH_DOWN: DashState, DASH_UP: RunState,
                SPACE : RunState},
 
     SleepState: {LEFT_DOWN: RunState, RIGHT_DOWN: RunState,
-    LEFT_UP: RunState, RIGHT_UP: RunState,DASH_DOWN: IdleState, DASH_UP: IdleState,
+    LEFT_UP: RunState, RIGHT_UP: RunState, DASH_DOWN: DashState, DASH_UP: IdleState,
                  SPACE : IdleState},
 
     DashState: {LEFT_DOWN: DashState, RIGHT_DOWN: DashState,
-                LEFT_UP: IdleState, RIGHT_UP: IdleState, DASH_DOWN: IdleState, DASH_UP: RunState,
-                SPACE : IdleState},
+                LEFT_UP: DashState, RIGHT_UP: DashState, DASH_DOWN: DashState, DASH_UP: RunState,
+                SPACE : DashState, DASH_REMOVE : RunState},
 
 }
 
