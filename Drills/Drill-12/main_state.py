@@ -8,7 +8,6 @@ import game_world
 
 from boy import Boy
 from grass import Grass
-from ghost import Ghost
 
 name = "MainState"
 
@@ -19,10 +18,8 @@ def enter():
     global ghost
     boy = Boy()
     grass = Grass()
-    ghost = Ghost()
     game_world.add_object(grass, 0)
     game_world.add_object(boy, 1)
-    game_world.add_object(ghost, 1)
 
 def exit():
     game_world.clear()

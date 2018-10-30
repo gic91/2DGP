@@ -3,6 +3,7 @@ from ball import Ball
 import math
 import game_world
 import game_framework
+import random
 
 # Boy Run Speed
 # fill expressions correctly
@@ -22,7 +23,7 @@ FRAMES_PER_ACTION = 8
 
 
 # Boy Event
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SLEEP_TIMER ,DASH_DOWN, DASH_UP, DASH_REMOVE,SPACE = range(9)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SLEEP_TIMER ,DASH_DOWN, DASH_UP, DASH_REMOVE,SPACE,MOVE_TIMER = range(10)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
@@ -61,7 +62,7 @@ class IdleState:
     def do(boy):
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
         boy.timer = int(get_time())
-        if boy.timer-boy.timer2  == 1: # 눕는 시간
+        if boy.timer-boy.timer2  == 10: # 눕는 시간
             boy.add_event(SLEEP_TIMER)
     @staticmethod
     def draw(boy):
@@ -106,6 +107,43 @@ class RunState:
         else:
             boy.image.clip_draw(int(boy.frame) * 100, 0, 100, 100, boy.x, boy.y)
 
+class Roundstate:
+    @staticmethod
+    def enter(boy, event):
+        boy.make = random.randint(20, 60) / 100
+        global th,r
+        boy.timer = get_time()
+        th = math.radians(3.14)*90
+    @staticmethod
+    def exit(ghost, event):
+        pass
+
+    @staticmethod
+    def do(boy):
+        global th,r
+        boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+
+        boy.timer = get_time()
+        boy.make = boy.timer - boy.timer2
+        th = math.radians(720 * (boy.make))
+
+
+
+    @staticmethod
+    def draw(boy):
+        global th
+        if boy.dir == 1:
+            boy.image.opacify(boy.make)
+            boy.image.clip_draw(int(boy.frame) * 100, 300, 100, 100, (boy.x + 10 * PIXEL_PER_METER * math.cos(th)),(boy.y + 350 + 10 * PIXEL_PER_METER * math.sin(th)))
+            boy.image.opacify(1)
+            boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25,100, 100)
+        else:
+            boy.image.opacify(boy.make)
+            boy.image.clip_draw(int(boy.frame) * 100, 200, 100, 100, (boy.x + 10 * PIXEL_PER_METER*math.sin(th)), (boy.y+ 350+10*PIXEL_PER_METER*math.cos(th)))
+            boy.image.opacify(1)
+            boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, -3.141592 / 2, '', boy.x + 25,boy.y - 25, 100, 100)
+
+
 
 class DashState:
 
@@ -141,6 +179,7 @@ class DashState:
     def draw(boy):
         if boy.dir == 1:
             boy.image.clip_draw(int(boy.frame)* 100, 100, 100, 100, boy.x, boy.y)
+            
         else:
             boy.image.clip_draw(int(boy.frame)* 100, 0, 100, 100, boy.x, boy.y)
 
@@ -149,19 +188,31 @@ class SleepState:
     @staticmethod
     def enter(boy,event):
         boy.frame = 0
-
+        boy.timer2 = get_time()
+        boy.make = 2
     @staticmethod
     def exit(boy,event):
         pass
     @staticmethod
     def do(boy):
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+        boy.timer = get_time() + 2
+        boy.make = (boy.timer - boy.timer2) * 2
+        if boy.make >= 20:
+            boy.add_event(MOVE_TIMER)
+        boy.image.opacify(0.3)
     @staticmethod
     def draw(boy):
         if boy.dir == 1:
+            boy.image.opacify(1)
             boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25, 100, 100)
+            boy.image.opacify(0.2)
+            boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, (3.141592) * 2 / boy.make, '',boy.x - 25 + (boy.make), boy.y - 25 + (boy.make * 2), 100, 100)
         else:
+            boy.image.opacify(1)
             boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, -3.141592 / 2, '', boy.x + 25, boy.y - 25, 100, 100)
+            boy.image.opacify(0.2)
+            boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, (-3.141592) * 2 / boy.make, '',boy.x+ 25  -(boy.make*2), boy.y- 25  + (boy.make * 2), 100, 100)
 
 next_state_table = {
     IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState,
@@ -174,12 +225,14 @@ next_state_table = {
 
     SleepState: {LEFT_DOWN: RunState, RIGHT_DOWN: RunState,
     LEFT_UP: RunState, RIGHT_UP: RunState, DASH_DOWN: DashState, DASH_UP: IdleState,
-                 SPACE : IdleState},
+                 SPACE : IdleState,MOVE_TIMER : Roundstate},
 
     DashState: {LEFT_DOWN: DashState, RIGHT_DOWN: DashState,
                 LEFT_UP: DashState, RIGHT_UP: DashState, DASH_DOWN: DashState, DASH_UP: RunState,
                 SPACE : DashState, DASH_REMOVE : RunState},
-
+    Roundstate:{LEFT_DOWN: RunState, RIGHT_DOWN: RunState,
+    LEFT_UP: RunState, RIGHT_UP: RunState, DASH_DOWN: DashState, DASH_UP: IdleState,
+                 SPACE : IdleState}
 }
 
 class Boy:
