@@ -13,6 +13,7 @@ RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0/60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
+RAD = PIXEL_PER_METER *3
 # Boy Action Speed
 # fill expressions correctly
 TIME_PER_ACTION = 0.5
@@ -134,12 +135,12 @@ class Roundstate:
         global th
         if boy.dir == 1:
             boy.image.opacify(boy.make)
-            boy.image.clip_draw(int(boy.frame) * 100, 300, 100, 100, (boy.x + 10 * PIXEL_PER_METER * math.cos(th)),(boy.y + 350 + 10 * PIXEL_PER_METER * math.sin(th)))
+            boy.image.clip_draw(int(boy.frame) * 100, 300, 100, 100, (boy.x + RAD * math.cos(th)),(boy.y + 50 + RAD * math.sin(th)))
             boy.image.opacify(1)
             boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25,100, 100)
         else:
             boy.image.opacify(boy.make)
-            boy.image.clip_draw(int(boy.frame) * 100, 200, 100, 100, (boy.x + 10 * PIXEL_PER_METER*math.sin(th)), (boy.y+ 350+10*PIXEL_PER_METER*math.cos(th)))
+            boy.image.clip_draw(int(boy.frame) * 100, 200, 100, 100, (boy.x + RAD*math.sin(th)), (boy.y+ 50+RAD*math.cos(th)))
             boy.image.opacify(1)
             boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, -3.141592 / 2, '', boy.x + 25,boy.y - 25, 100, 100)
 
