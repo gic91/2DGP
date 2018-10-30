@@ -2,6 +2,24 @@ from pico2d import *
 from ball import Ball
 import math
 import game_world
+import game_framework
+
+# Boy Run Speed
+# fill expressions correctly
+PIXEL_PER_METER =(10.0/0.3)
+RUN_SPEED_KMPH = 20.0
+RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0/60.0)
+RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+# Boy Action Speed
+# fill expressions correctly
+TIME_PER_ACTION = 0.5
+ACTION_PER_TIME = 1.0
+FRAMES_PER_ACTION = 8
+
+
+
 
 # Boy Event
 RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SLEEP_TIMER ,DASH_DOWN, DASH_UP, DASH_REMOVE,SPACE = range(9)
@@ -25,14 +43,14 @@ class IdleState:
     @staticmethod
     def enter(boy, event):
         if event == RIGHT_DOWN:
-            boy.velocity += 1
+            boy.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
-            boy.velocity -= 1
+            boy.velocity -= RUN_SPEED_PPS
         elif event == RIGHT_UP:
-            boy.velocity -= 1
+            boy.velocity -= RUN_SPEED_PPS
         elif event == LEFT_UP:
-            boy.velocity += 1
-        boy.timer = 300
+            boy.velocity += RUN_SPEED_PPS
+        boy.timer2 = int(get_time())
 
     @staticmethod
     def exit(boy, event):
@@ -41,16 +59,16 @@ class IdleState:
 
     @staticmethod
     def do(boy):
-        boy.frame = (boy.frame + 1) % 8
-        boy.timer -= 1
-        if boy.timer == 0:
+        boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+        boy.timer = int(get_time())
+        if boy.timer-boy.timer2  == 1: # 눕는 시간
             boy.add_event(SLEEP_TIMER)
     @staticmethod
     def draw(boy):
         if boy.dir == 1:
-            boy.image.clip_draw(boy.frame * 100, 300, 100, 100, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame) * 100, 300, 100, 100, boy.x, boy.y)
         else:
-            boy.image.clip_draw(boy.frame * 100, 200, 100, 100, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame)* 100, 200, 100, 100, boy.x, boy.y)
 
 
 
@@ -60,14 +78,14 @@ class RunState:
     def enter(boy, event):
         boy.frame = 0
         if event == RIGHT_DOWN:
-            boy.velocity += 1
+            boy.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
-            boy.velocity -= 1
+            boy.velocity -= RUN_SPEED_PPS
         elif event == RIGHT_UP:
-            boy.velocity -= 1
+            boy.velocity -= RUN_SPEED_PPS
         elif event == LEFT_UP:
-            boy.velocity += 1
-        boy.dir = boy.velocity
+            boy.velocity += RUN_SPEED_PPS
+        boy.dir = clamp(-1,boy.velocity,1)
 
     @staticmethod
     def exit(boy, event):
@@ -77,18 +95,16 @@ class RunState:
 
     @staticmethod
     def do(boy):
-
-        boy.frame = (boy.frame + 1)%8
-        boy.timer -= 1
-        boy.x += boy.velocity
+        boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
+        boy.x += boy.velocity * game_framework.frame_time
         boy.x = clamp(25, boy.x, 1600 - 25)
 
     @staticmethod
     def draw(boy):
-        if boy.velocity == 1:
-            boy.image.clip_draw(boy.frame * 100, 100, 100, 100, boy.x, boy.y)
+        if boy.dir == 1:
+            boy.image.clip_draw(int(boy.frame) * 100, 100, 100, 100, boy.x, boy.y)
         else:
-            boy.image.clip_draw(boy.frame * 100, 0, 100, 100, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame) * 100, 0, 100, 100, boy.x, boy.y)
 
 
 class DashState:
@@ -97,14 +113,14 @@ class DashState:
     def enter(boy, event):
         boy.frame = 0
         if event == RIGHT_DOWN:
-            boy.velocity += 1
+            boy.velocity += RUN_SPEED_PPS
         elif event == LEFT_DOWN:
-            boy.velocity -= 1
+            boy.velocity -= RUN_SPEED_PPS
         elif event == RIGHT_UP:
-            boy.velocity -= 1
+            boy.velocity -= RUN_SPEED_PPS
         elif event == LEFT_UP:
-            boy.velocity += 1
-        boy.dir = boy.velocity
+            boy.velocity += RUN_SPEED_PPS
+        boy.dir = clamp(-1,boy.velocity,1)
         boy.timer = 200
     @staticmethod
     def exit(boy, event):
@@ -114,20 +130,19 @@ class DashState:
 
     @staticmethod
     def do(boy):
-        boy.frame = (boy.frame + 1) % 8
         boy.timer -= 1
-        boy.x += boy.velocity*3
+        boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time*3) % 8
+        boy.x += boy.velocity * game_framework.frame_time*3
         boy.x = clamp(25, boy.x, 1600 - 25)
-
         if boy.timer == 0:
            boy.add_event(DASH_REMOVE)
 
     @staticmethod
     def draw(boy):
-        if boy.velocity == 1:
-            boy.image.clip_draw(boy.frame * 100, 100, 100, 100, boy.x, boy.y)
+        if boy.dir == 1:
+            boy.image.clip_draw(int(boy.frame)* 100, 100, 100, 100, boy.x, boy.y)
         else:
-            boy.image.clip_draw(boy.frame * 100, 0, 100, 100, boy.x, boy.y)
+            boy.image.clip_draw(int(boy.frame)* 100, 0, 100, 100, boy.x, boy.y)
 
 
 class SleepState:
@@ -140,16 +155,13 @@ class SleepState:
         pass
     @staticmethod
     def do(boy):
-        boy.frame = (boy.frame + 1) % 8
+        boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % 8
     @staticmethod
     def draw(boy):
         if boy.dir == 1:
-            boy.image.clip_composite_draw(boy.frame * 100, 300, 100, 100,
-            3.141592 / 2, '', boy.x - 25, boy.y - 25, 100, 100)
+            boy.image.clip_composite_draw(int(boy.frame) * 100, 300, 100, 100, 3.141592 / 2, '', boy.x - 25, boy.y - 25, 100, 100)
         else:
-            boy.image.clip_composite_draw(boy.frame * 100, 200, 100, 100,
-            -3.141592 / 2, '', boy.x + 25, boy.y - 25, 100, 100)
-
+            boy.image.clip_composite_draw(int(boy.frame) * 100, 200, 100, 100, -3.141592 / 2, '', boy.x + 25, boy.y - 25, 100, 100)
 
 next_state_table = {
     IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState,
@@ -177,8 +189,10 @@ class Boy:
         self.image = load_image('animation_sheet.png')
         self.dir = 1
         self.velocity = 0
+        self.font = load_font('ENCR10B.TTF',16)
         self.frame = 0
         self.timer = 0
+        self.timer2 = 0
         self.event_que = []
         self.cur_state = IdleState
         self.cur_state.enter(self, None)
@@ -203,7 +217,7 @@ class Boy:
 
     def draw(self):
         self.cur_state.draw(self)
-
+        self.font.draw(self.x - 60, self.y +50, '(Time:%3.2f)' %get_time(), (255,255,0))
 
     def handle_event(self, event):
         if (event.type, event.key) in key_event_table:
