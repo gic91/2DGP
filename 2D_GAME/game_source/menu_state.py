@@ -5,6 +5,7 @@ import os
 from pico2d import *
 import game_framework
 import game_world
+import menu_world
 import game_state
 from Start_menu import Menu
 
@@ -16,10 +17,10 @@ Start_menu = None
 def enter():
     global Start_menu
     Start_menu = Menu()
-    game_world.add_object(Start_menu, 0)
+    menu_world.add_object(Start_menu, 0)
 
 def exit():
-    game_world.clear()
+    menu_world.clear()
 
 def pause():
     pass
@@ -46,14 +47,14 @@ def handle_events():
 
 
 def update():
-    for game_object in game_world.all_objects():
+    for game_object in menu_world.all_objects():
         game_object.update()
 
 
 
 def draw():
     clear_canvas()
-    for game_object in game_world.all_objects():
+    for game_object in menu_world.all_objects():
         game_object.draw()
     update_canvas()
 

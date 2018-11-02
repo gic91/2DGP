@@ -8,15 +8,31 @@ import game_world
 
 
 from Main_Stage import Stage
+from Main_Stage import Item
+from Main_Stage import Princess
+from Main_Stage import Time
+from Mario import Mario
+
 name = "GameState"
 
 Main_Stage=None
-
+item=None
+princess =None
+main_time=None
+mario =None
 def enter():
-    global Main_Stage
-    Main_Stage = Stage()
-    game_world.add_object(Main_Stage, 0)
+    global Main_Stage, item, princess,main_time,mario
 
+    Main_Stage = Stage()
+    item = Item()
+    princess = Princess()
+    main_time = Time()
+    mario = Mario()
+    game_world.add_object(Main_Stage, 0)
+    game_world.add_object(item, 0)
+    game_world.add_object(princess, 0)
+    game_world.add_object(main_time, 0)
+    game_world.add_object(mario, 1)
 def exit():
     game_world.clear()
 
@@ -35,6 +51,8 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
                 game_framework.quit()
+        else:
+            mario.handle_event(event)
 
 
 def update():
