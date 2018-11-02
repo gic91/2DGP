@@ -1,11 +1,10 @@
 from pico2d import *
-from ball import Ball
-import math
+
 import game_world
 import game_framework
-import random
 
-# Boy Run Speed
+
+
 # fill expressions correctly
 PIXEL_PER_METER =(10.0/0.3)
 RUN_SPEED_KMPH = 20.0
@@ -19,9 +18,6 @@ RAD = PIXEL_PER_METER *3
 TIME_PER_ACTION = 0.5
 ACTION_PER_TIME = 1.0
 FRAMES_PER_ACTION = 8
-
-
-
 
 
 UP_UP,UP_DOWN, DOWN_UP,DOWN_DOWN ,SPACE= range(5)
@@ -44,7 +40,8 @@ class StartState:
 
     @staticmethod
     def exit(menu, event):
-       pass
+        if event ==SPACE:
+            menu.start =1
     @staticmethod
     def do(menu):
         menu.timer +=1
@@ -121,19 +118,13 @@ class Menu:
         self.image2 = load_image('game_sprite\\background_title_1.png')
         self.image3 = load_image('game_sprite\\background_title_2.png')
         self.image4 = load_image('game_sprite\\background_title_3.png')
-        self.dir = 1
-        self.velocity = 0
-        self.frame = 0
+        self.start =0
         self.timer = 0
         self.timer2 = 0
         self.event_que = []
         self.cur_state = StartState
         self.cur_state.enter(self, None)
         self.sleep_on=0
-
-    def fire_ball(self):
-        ball =Ball(self.x,self.y,self.dir*3)
-        game_world.add_object(ball,1 )
 
 
 

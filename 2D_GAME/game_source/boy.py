@@ -108,7 +108,7 @@ next_state_table = {
 
 }
 
-class Menu:
+class Boy:
 
     def __init__(self):
         self.x, self.y = 1600 // 2, 90
