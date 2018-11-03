@@ -2,6 +2,7 @@ from pico2d import *
 
 import game_framework
 
+
 time_time =100
 class Stage:
     def __init__(self):
@@ -46,14 +47,14 @@ class Princess:
             self.timer2 = get_time()
 
         self.frame = (self.frame+ int(self.timer2-self.timer))%4
-        if time_time <= 98:
+        if time_time <= 0:
             self.y+=1
             if self.y >= 250:
                 game_framework.quit()
                 self.y = 250
     def draw(self):
         global time_time
-        if time_time <=98:
+        if time_time <=0:
             self.image.clip_draw(120, 0, 85, 120, 1105, 200-self.y)
         else:
             self.image2.draw(1100, 450)
@@ -77,15 +78,20 @@ class Time:
             game_framework.quit()
     def draw(self):
         self.font.draw(1060, 670, '%3d' % self.main_time, (255, 0, 0))
-class Mario:
-    def __init__(self):
-        self.image = load_image('game_sprite\\main_background.png')
-        self.timer =0
-        self.font = load_font('ENCR10B.TTF', 60)
-        self.main_time =100
-        self.timer2=100
+
+class Coin:
+    def __init__(self, count=0):
+        self.image = load_image('game_sprite\\sprite.png')
+        self.count=count
     def update(self):
-        self.timer =int(get_time())
-        self.main_time = self.timer2 - self.timer
+        pass
     def draw(self):
-        self.font.draw(1060, 670, '%3d' % self.main_time, (255, 0, 0))
+
+        if self.count >=1:
+            self.image.clip_draw(220, 140, 50, 50, 720, 750)
+            if self.count >= 2:
+                self.image.clip_draw(220, 140, 50, 50, 770, 750)
+                if self.count>= 3:
+                    self.image.clip_draw(220, 140, 50, 50, 820, 750)
+                    if self.count== 4:
+                         self.image.clip_draw(220, 140, 50, 50, 870, 750)

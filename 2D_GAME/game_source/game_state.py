@@ -11,6 +11,7 @@ from Main_Stage import Stage
 from Main_Stage import Item
 from Main_Stage import Princess
 from Main_Stage import Time
+from Main_Stage import Coin
 from Mario import Mario
 
 name = "GameState"
@@ -20,19 +21,22 @@ item=None
 princess =None
 main_time=None
 mario =None
+coin =None
 def enter():
-    global Main_Stage, item, princess,main_time,mario
+    global Main_Stage, item, princess,main_time,mario,coin
 
     Main_Stage = Stage()
     item = Item()
     princess = Princess()
     main_time = Time()
     mario = Mario()
+    coin = Coin()
     game_world.add_object(Main_Stage, 0)
     game_world.add_object(item, 0)
     game_world.add_object(princess, 0)
     game_world.add_object(main_time, 0)
     game_world.add_object(mario, 1)
+    game_world.add_object(coin, 0)
 def exit():
     game_world.clear()
 
