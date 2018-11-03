@@ -5,7 +5,7 @@ import os
 from pico2d import *
 import game_framework
 import game_world
-import game_stage1_state
+import stage1_state
 
 from Main_Stage import Stage
 from Main_Stage import Item

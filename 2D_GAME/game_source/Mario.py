@@ -3,7 +3,10 @@ from pico2d import *
 import math
 import game_world
 import game_framework
-import game_stage1_state
+import stage1_state
+import stage2_state
+import stage3_state
+import stage4_state
 import random
 from Main_Stage import Coin
 # Boy Run Speed
@@ -82,7 +85,7 @@ class IdleState:
                         box1 =True
                         coin =Coin(boy.Coin_count)
                         game_world.add_object(coin, 0)
-                        game_framework.push_state(game_stage1_state)
+                        game_framework.push_state(stage1_state)
                 elif boy.x >=370 and boy.x<=440:
 
                     if box2 == False:
@@ -90,7 +93,7 @@ class IdleState:
                         box2 = True
                         coin =Coin(boy.Coin_count)
                         game_world.add_object(coin, 0)
-                        game_framework.push_state(game_stage1_state)
+                        game_framework.push_state(stage2_state)
                 elif boy.x >=570 and boy.x<=640:
 
                     if box3 == False:
@@ -98,7 +101,7 @@ class IdleState:
                         box3 = True
                         coin =Coin(boy.Coin_count)
                         game_world.add_object(coin, 0)
-                        game_framework.push_state(game_stage1_state)
+                        game_framework.push_state(stage3_state)
                 elif boy.x >=770 and boy.x<=840:
 
                     if box4 == False:
@@ -106,7 +109,7 @@ class IdleState:
                         box4 = True
                         coin =Coin(boy.Coin_count)
                         game_world.add_object(coin, 0)
-                        game_framework.push_state(game_stage1_state)
+                        game_framework.push_state(stage4_state)
             elif boy.jump <0:
                 boy.jump_check = False
                 boy.jump_on =False
@@ -191,7 +194,7 @@ class RunState:
                         box1 = True
                         coin = Coin(boy.Coin_count)
                         game_world.add_object(coin, 0)
-                        game_framework.push_state(game_stage1_state)
+                        game_framework.push_state(stage1_state)
                 elif boy.x >= 370 and boy.x <= 440:
 
                     if box2 == False:
@@ -199,7 +202,7 @@ class RunState:
                         box2 = True
                         coin = Coin(boy.Coin_count)
                         game_world.add_object(coin, 0)
-                        game_framework.push_state(game_stage1_state)
+                        game_framework.push_state(stage2_state)
                 elif boy.x >= 570 and boy.x <= 640:
 
                     if box3 == False:
@@ -207,7 +210,7 @@ class RunState:
                         box3 = True
                         coin = Coin(boy.Coin_count)
                         game_world.add_object(coin, 0)
-                        game_framework.push_state(game_stage1_state)
+                        game_framework.push_state(stage3_state)
                 elif boy.x >= 770 and boy.x <= 840:
 
                     if box4 == False:
@@ -215,7 +218,7 @@ class RunState:
                         box4 = True
                         coin = Coin(boy.Coin_count)
                         game_world.add_object(coin, 0)
-                        game_framework.push_state(game_stage1_state)
+                        game_framework.push_state(stage4_state)
             elif boy.jump < 0:
                 boy.jump_check = False
                 boy.jump_on = False

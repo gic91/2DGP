@@ -43,30 +43,16 @@ class Shell:
     def __init__(self):
         self.image = load_image('game_sprite\\shell.png')
         self.Count =10
-        self.out_on=[False]
         self.Y=[]
         self.color=[1,0,0,2,0,1,2,0,1,2]
         for i in range(0,self.Count):
             #self.color.append(random.randint(0,2))
             self.Y.append(i*200)
-
         self.start=500
-
-    def add_event(self, event):
-        self.event_que.insert(0, event)
-
     def update(self):
         self.start-=10
         if self.start <=0:
             self.start =0
-        if self.out_on[0] ==True:
-            self.Y[0] += 10
-    def handle_event(self,event):
-        events = get_events()
-        for event in events:
-            if event.type == SDL_KEYDOWN and event.key == SDLK_LEFT:
-                game_framework.quit()
-                #self.out_on[0]=True
     def draw(self):
         for j ,i in enumerate(self.Y):
                 if self.color[j] ==0:
