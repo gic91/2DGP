@@ -55,12 +55,12 @@ class Princess:
     def draw(self):
         global time_time
         if time_time <=0:
-            self.image.clip_draw(120, 0, 85, 120, 1105, 200-self.y)
+            self.image.clip_draw(110, 0, 85, 120, 1120, 200-self.y)
         else:
             self.image2.draw(1100, 450)
             self.image2.draw(1100, 350)
-            self.image.clip_draw(0, 0, 85, 115, 1100, 200)
-            self.image3.clip_draw(int(self.frame)*88, 0, 80, 100, 1140, 280)
+            self.image.clip_draw(0, 0, 85, 115, 1120, 200)
+            self.image3.clip_draw(int(self.frame)*88, 0, 80, 100, 1160, 280)
 
 class Time:
     def __init__(self):

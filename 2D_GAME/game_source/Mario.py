@@ -21,14 +21,15 @@ ACTION_PER_TIME = 1.0
 FRAMES_PER_ACTION = 8
 
 # Boy Event
-RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SPACE= range(5)
+RIGHT_DOWN, LEFT_DOWN, RIGHT_UP, LEFT_UP, SPACE,UP_DOWN= range(6)
 
 key_event_table = {
     (SDL_KEYDOWN, SDLK_RIGHT): RIGHT_DOWN,
     (SDL_KEYDOWN, SDLK_LEFT): LEFT_DOWN,
     (SDL_KEYUP, SDLK_RIGHT): RIGHT_UP,
     (SDL_KEYUP, SDLK_LEFT): LEFT_UP,
-    (SDL_KEYDOWN, SDLK_SPACE): SPACE
+    (SDL_KEYDOWN, SDLK_SPACE): SPACE,
+    (SDL_KEYDOWN, SDLK_UP): UP_DOWN
 }
 
 
@@ -52,7 +53,10 @@ class IdleState:
         elif event == LEFT_UP:
             boy.velocity += RUN_SPEED_PPS
         boy.timer2 = int(get_time())
-
+        if boy.Coin_count ==0:
+            if event == UP_DOWN:
+                if boy.x > 920 and boy.x<1100:
+                    game_framework.exit()
     @staticmethod
     def exit(boy, event):
         if event == SPACE:
@@ -102,6 +106,8 @@ class IdleState:
                 boy.jump_check = False
                 boy.jump_on =False
 
+
+
     @staticmethod
     def draw(boy):
         if boy.Coin_count == 4:
@@ -148,7 +154,10 @@ class RunState:
         elif event == LEFT_UP:
             boy.velocity += RUN_SPEED_PPS
         boy.dir = clamp(-1, boy.velocity, 1)
+        if boy.Coin_count == 4:
+            if event == UP_DOWN:
 
+                game_framework.quit()
     @staticmethod
     def exit(boy, event):
         if event == SPACE:
@@ -245,10 +254,10 @@ class RunState:
 
 next_state_table = {
     IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState,
-                RIGHT_DOWN: RunState, LEFT_DOWN: RunState,  SPACE: IdleState},
+                RIGHT_DOWN: RunState, LEFT_DOWN: RunState,  SPACE: IdleState, UP_DOWN :IdleState},
 
     RunState: {RIGHT_UP: IdleState, LEFT_UP: IdleState,
-               LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState,  SPACE: RunState},
+               LEFT_DOWN: IdleState, RIGHT_DOWN: IdleState,  SPACE: RunState, UP_DOWN : RunState},
 
 
 }
