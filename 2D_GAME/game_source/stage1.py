@@ -46,12 +46,14 @@ class Shell:
         self.Count =10
         self.out_on=[False]
         self.Y=[]
+        self.X=[]
         self.color=[1,0,0,2,0,1,2,0,1,2]
         for i in range(0,self.Count):
             #self.color.append(random.randint(0,2))
             self.Y.append(i*200)
+            self.X.append(i*0)
         self.start=500
-
+        self.num=0
     def add_event(self, event):
         self.event_que.insert(0, event)
 
@@ -60,18 +62,35 @@ class Shell:
         if self.start <=0:
             self.start =0
         if stage1_state.on == 1:
-            self.Y[0] += 10
+            if self.color[self.num]==0 :
+                for i in range(0,self.num):
+                    self.X[i] += 10
+                self.num+=1
+                if self.num >= self.Count:
+                    self.num=0
+        elif stage1_state.on == 2:
+            if self.color[self.num] == 1:
+                self.X[self.num] += 10
+                #self.num += 1
+                if self.num >= self.Count:
+                    self.num = 0
+        elif stage1_state.on == 3:
+            if self.color[self.num] == 2:
+                self.X[self.num] += 10
+                self.num += 1
+                if self.num >= self.Count:
+                    self.num = 0
     def handle_event(self,event):
         pass
     def draw(self):
         for j ,i in enumerate(self.Y):
                 if self.color[j] ==0:
                 #R
-                    self.image.clip_draw(0, 0, 198, 200, 630, 100 + i+self.start)
+                    self.image.clip_draw(0, 0, 198, 200, 630+self.X[j], 100 + i+self.start)
                 if self.color[j]==1:
                 #B
-                    self.image.clip_draw(203, 0, 200, 200, 630, 100 + i+self.start)
+                    self.image.clip_draw(203, 0, 200, 200, 630+self.X[j], 100 + i+self.start)
                 if self.color[j]==2:
                 #G
-                    self.image.clip_draw(407, 0, 200, 200, 630, 100 + i+self.start)
+                    self.image.clip_draw(407, 0, 200, 200, 630-self.X[j], 100 + i+self.start)
 
