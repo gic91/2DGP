@@ -3,6 +3,7 @@ from pico2d import *
 import game_framework
 import random
 import Main_Stage
+import stage1_state
 
 time_time = Main_Stage.time_time
 
@@ -49,7 +50,6 @@ class Shell:
         for i in range(0,self.Count):
             #self.color.append(random.randint(0,2))
             self.Y.append(i*200)
-
         self.start=500
 
     def add_event(self, event):
@@ -59,14 +59,10 @@ class Shell:
         self.start-=10
         if self.start <=0:
             self.start =0
-        if self.out_on[0] ==True:
+        if stage1_state.on == 1:
             self.Y[0] += 10
     def handle_event(self,event):
-        events = get_events()
-        for event in events:
-            if event.type == SDL_KEYDOWN and event.key == SDLK_LEFT:
-                game_framework.quit()
-                #self.out_on[0]=True
+        pass
     def draw(self):
         for j ,i in enumerate(self.Y):
                 if self.color[j] ==0:

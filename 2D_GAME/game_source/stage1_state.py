@@ -14,6 +14,7 @@ name = "Stage_1State"
 back =None
 time =None
 shell =None
+on =0
 def enter():
     global back,time,shell
     back = Back()
@@ -35,13 +36,15 @@ def resume():
 
 
 def handle_events():
-    global shell
+    global shell,on
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
                 game_framework.pop_state()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_LEFT:
+               on=1
         else:
             shell.handle_event(event)
 
