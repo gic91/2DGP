@@ -5,7 +5,7 @@ import os
 from pico2d import *
 import game_framework
 import game_world
-
+import game_stage1_state
 
 from Main_Stage import Stage
 from Main_Stage import Item
@@ -55,6 +55,7 @@ def handle_events():
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
                 game_framework.quit()
+
         else:
             mario.handle_event(event)
 

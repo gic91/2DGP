@@ -41,6 +41,7 @@ class Princess:
         self.y=0
         self.frame=0
     def update(self):
+        global time_time
         self.timer2 =get_time()
         if self.timer2-self.timer >1.03:
             self.timer = get_time()

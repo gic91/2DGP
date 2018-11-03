@@ -1,8 +1,9 @@
 from pico2d import *
-from ball import Ball
+
 import math
 import game_world
 import game_framework
+import game_stage1_state
 import random
 from Main_Stage import Coin
 # Boy Run Speed
@@ -53,7 +54,7 @@ class IdleState:
         elif event == LEFT_UP:
             boy.velocity += RUN_SPEED_PPS
         boy.timer2 = int(get_time())
-        if boy.Coin_count ==0:
+        if boy.Coin_count ==4:
             if event == UP_DOWN:
                 if boy.x > 920 and boy.x<1100:
                     game_framework.exit()
@@ -79,29 +80,33 @@ class IdleState:
                     if box1 ==False:
                         boy.Coin_count +=1
                         box1 =True
-                    coin =Coin(boy.Coin_count)
-                    game_world.add_object(coin, 0)
+                        coin =Coin(boy.Coin_count)
+                        game_world.add_object(coin, 0)
+                        game_framework.push_state(game_stage1_state)
                 elif boy.x >=370 and boy.x<=440:
 
                     if box2 == False:
                         boy.Coin_count += 1
                         box2 = True
-                    coin =Coin(boy.Coin_count)
-                    game_world.add_object(coin, 0)
+                        coin =Coin(boy.Coin_count)
+                        game_world.add_object(coin, 0)
+                        game_framework.push_state(game_stage1_state)
                 elif boy.x >=570 and boy.x<=640:
 
                     if box3 == False:
                         boy.Coin_count += 1
                         box3 = True
-                    coin =Coin(boy.Coin_count)
-                    game_world.add_object(coin, 0)
+                        coin =Coin(boy.Coin_count)
+                        game_world.add_object(coin, 0)
+                        game_framework.push_state(game_stage1_state)
                 elif boy.x >=770 and boy.x<=840:
 
                     if box4 == False:
                         boy.Coin_count += 1
                         box4 = True
-                    coin =Coin(boy.Coin_count)
-                    game_world.add_object(coin, 0)
+                        coin =Coin(boy.Coin_count)
+                        game_world.add_object(coin, 0)
+                        game_framework.push_state(game_stage1_state)
             elif boy.jump <0:
                 boy.jump_check = False
                 boy.jump_on =False
@@ -154,10 +159,10 @@ class RunState:
         elif event == LEFT_UP:
             boy.velocity += RUN_SPEED_PPS
         boy.dir = clamp(-1, boy.velocity, 1)
-        if boy.Coin_count == 4:
+        if boy.Coin_count ==4:
             if event == UP_DOWN:
-
-                game_framework.quit()
+                if boy.x > 920 and boy.x<1100:
+                    game_framework.exit()
     @staticmethod
     def exit(boy, event):
         if event == SPACE:
@@ -184,29 +189,33 @@ class RunState:
                     if box1 == False:
                         boy.Coin_count += 1
                         box1 = True
-                    coin = Coin(boy.Coin_count)
-                    game_world.add_object(coin, 0)
+                        coin = Coin(boy.Coin_count)
+                        game_world.add_object(coin, 0)
+                        game_framework.push_state(game_stage1_state)
                 elif boy.x >= 370 and boy.x <= 440:
 
                     if box2 == False:
                         boy.Coin_count += 1
                         box2 = True
-                    coin = Coin(boy.Coin_count)
-                    game_world.add_object(coin, 0)
+                        coin = Coin(boy.Coin_count)
+                        game_world.add_object(coin, 0)
+                        game_framework.push_state(game_stage1_state)
                 elif boy.x >= 570 and boy.x <= 640:
 
                     if box3 == False:
                         boy.Coin_count += 1
                         box3 = True
-                    coin = Coin(boy.Coin_count)
-                    game_world.add_object(coin, 0)
+                        coin = Coin(boy.Coin_count)
+                        game_world.add_object(coin, 0)
+                        game_framework.push_state(game_stage1_state)
                 elif boy.x >= 770 and boy.x <= 840:
 
                     if box4 == False:
                         boy.Coin_count += 1
                         box4 = True
-                    coin = Coin(boy.Coin_count)
-                    game_world.add_object(coin, 0)
+                        coin = Coin(boy.Coin_count)
+                        game_world.add_object(coin, 0)
+                        game_framework.push_state(game_stage1_state)
             elif boy.jump < 0:
                 boy.jump_check = False
                 boy.jump_on = False
@@ -275,6 +284,7 @@ class Mario:
         self.frame = 0
         self.timer = 0
         self.timer2 = 0
+        self.stage = 0
         self.Coin_count=0
         self.jump_on = False
         self.jump =0
@@ -284,9 +294,6 @@ class Mario:
         self.cur_state.enter(self, None)
         self.sleep_on = 0
 
-    def fire_ball(self):
-        ball = Ball(self.x, self.y, self.dir * 3)
-        game_world.add_object(ball, 1)
 
     def add_event(self, event):
         self.event_que.insert(0, event)
