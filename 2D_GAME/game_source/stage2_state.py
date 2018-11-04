@@ -6,10 +6,18 @@ from pico2d import *
 import game_framework
 import stage2_world
 import game_state
+from stage2 import Back
+from stage2 import Time
 name = "Stage_2State"
 
+back =None
+time =None
 def enter():
-    pass
+    global back,time
+    back = Back()
+    time = Time()
+    stage2_world.add_object(back, 0)
+    stage2_world.add_object(time, 0)
 def exit():
     stage2_world.clear()
 

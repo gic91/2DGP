@@ -7,13 +7,10 @@ import Main_Stage
 time_time = Main_Stage.time_time
 
 
-def makeshell(num,limit):
-    while num <= limit:
-        yield num
-        num += 1
+
 class Back:
     def __init__(self):
-        self.image = load_image('game_sprite\\stage1.png')
+        self.image = load_image('game_sprite\\stage2.png')
 
     def update(self):
         pass
@@ -37,31 +34,14 @@ class Time:
     def draw(self):
         self.font.draw(1060, 670, '%3d' % self.main_time, (255, 0, 0))
 
-
-class Shell:
-
+class Hero:
     def __init__(self):
-        self.image = load_image('game_sprite\\shell.png')
-        self.Count =10
-        self.Y=[]
-        self.color=[1,0,0,2,0,1,2,0,1,2]
-        for i in range(0,self.Count):
-            #self.color.append(random.randint(0,2))
-            self.Y.append(i*200)
-        self.start=500
+        self.image = load_image('game_sprite\\stage2.png')
+
     def update(self):
-        self.start-=10
-        if self.start <=0:
-            self.start =0
+        pass
+
     def draw(self):
-        for j ,i in enumerate(self.Y):
-                if self.color[j] ==0:
-                #R
-                    self.image.clip_draw(0, 0, 198, 200, 630, 100 + i+self.start)
-                if self.color[j]==1:
-                #B
-                    self.image.clip_draw(203, 0, 200, 200, 630, 100 + i+self.start)
-                if self.color[j]==2:
-                #G
-                    self.image.clip_draw(407, 0, 200, 200, 630, 100 + i+self.start)
+        self.image.draw(600, 400)
+
 

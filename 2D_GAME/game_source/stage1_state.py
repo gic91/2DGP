@@ -45,10 +45,16 @@ def handle_events():
                 game_framework.pop_state()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_LEFT: #R
             on=1
+        elif event.type == SDL_KEYUP and event.key == SDLK_LEFT: #R
+            on=4
         elif event.type == SDL_KEYDOWN and event.key == SDLK_RIGHT: #B
             on = 2
+        elif event.type == SDL_KEYUP and event.key == SDLK_RIGHT: #B
+            on = 5
         elif event.type == SDL_KEYDOWN and event.key == SDLK_DOWN:#G
             on = 3
+        elif event.type == SDL_KEYUP and event.key == SDLK_DOWN:  # G
+            on = 6
         else:
             shell.handle_event(event)
 

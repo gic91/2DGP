@@ -7,11 +7,8 @@ import stage1_state
 
 time_time = Main_Stage.time_time
 
+Min_time= Main_Stage.min_time
 
-def makeshell(num,limit):
-    while num <= limit:
-        yield num
-        num += 1
 class Back:
     def __init__(self):
         self.image = load_image('game_sprite\\stage1.png')
@@ -28,10 +25,11 @@ class Time:
         self.font = load_font('ENCR10B.TTF', 60)
         self.main_time =100
         self.timer2=100
+        self.min_time=0
     def update(self):
-        global time_time
+        global time_time,Min_time
         self.timer =int(get_time())
-        self.main_time = self.timer2 - self.timer
+        self.main_time = self.timer2 - self.timer -Main_Stage.min_time
         time_time = self.main_time
         if self.main_time ==0:
             game_framework.quit()
@@ -47,39 +45,67 @@ class Shell:
         self.out_on=[False]
         self.Y=[]
         self.X=[]
-        self.color=[1,0,0,2,0,1,2,0,1,2]
+        self.color=[1,0,1,2,0,1,2,0,1,2]
         for i in range(0,self.Count):
             #self.color.append(random.randint(0,2))
             self.Y.append(i*200)
             self.X.append(i*0)
         self.start=500
         self.num=0
+        self.min_time=0
+        self.min_counter=False
     def add_event(self, event):
         self.event_que.insert(0, event)
 
     def update(self):
+        global Min_time
         self.start-=10
         if self.start <=0:
             self.start =0
         if stage1_state.on == 1:
             if self.color[self.num]==0 :
-                for i in range(0,self.num):
-                    self.X[i] += 10
-                self.num+=1
-                if self.num >= self.Count:
-                    self.num=0
-        elif stage1_state.on == 2:
-            if self.color[self.num] == 1:
-                self.X[self.num] += 10
-                #self.num += 1
-                if self.num >= self.Count:
-                    self.num = 0
-        elif stage1_state.on == 3:
-            if self.color[self.num] == 2:
-                self.X[self.num] += 10
                 self.num += 1
                 if self.num >= self.Count:
-                    self.num = 0
+                    self.num += 0
+                    game_framework.pop_state()
+            else:
+                self.min_counter =True
+
+        elif stage1_state.on == 2:
+            if self.color[self.num] == 1:
+                self.num += 1
+                if self.num >= self.Count:
+                    self.num += 0
+                    game_framework.pop_state()
+            else:
+                self.min_counter = True
+        elif stage1_state.on == 3:
+            if self.color[self.num] == 2:
+                self.num += 1
+                if self.num >= self.Count:
+                    self.num += 0
+                    game_framework.pop_state()
+            else:
+                self.min_counter = True
+        elif stage1_state.on == 4:
+            self.min_counter = False
+        elif stage1_state.on == 5:
+            self.min_counter = False
+        elif stage1_state.on == 6:
+            self.min_counter = False
+
+        for i in range(0, self.num):
+            if self.X[i] >=200:
+                self.X[i] =5000
+            else:
+                self.X[i] += 10
+                for j in range(self.num,self.Count):
+                    self.Y[j] -=10
+
+        if self.min_counter == True:
+            self.min_time =0 #######################시간감소, 중복입력 방지 구현
+            Main_Stage.min_time = self.min_time
+
     def handle_event(self,event):
         pass
     def draw(self):

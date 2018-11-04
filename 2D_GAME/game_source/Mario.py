@@ -85,6 +85,9 @@ class IdleState:
                         box1 =True
                         coin =Coin(boy.Coin_count)
                         game_world.add_object(coin, 0)
+                        boy.cur_state = IdleState
+                        boy.dir = 1
+                        boy.velocity = 0
                         game_framework.push_state(stage1_state)
                 elif boy.x >=370 and boy.x<=440:
 
@@ -93,6 +96,9 @@ class IdleState:
                         box2 = True
                         coin =Coin(boy.Coin_count)
                         game_world.add_object(coin, 0)
+                        boy.cur_state = IdleState
+                        boy.dir = 1
+                        boy.velocity = 0
                         game_framework.push_state(stage2_state)
                 elif boy.x >=570 and boy.x<=640:
 
@@ -101,6 +107,9 @@ class IdleState:
                         box3 = True
                         coin =Coin(boy.Coin_count)
                         game_world.add_object(coin, 0)
+                        boy.cur_state = IdleState
+                        boy.dir = 1
+                        boy.velocity = 0
                         game_framework.push_state(stage3_state)
                 elif boy.x >=770 and boy.x<=840:
 
@@ -109,6 +118,9 @@ class IdleState:
                         box4 = True
                         coin =Coin(boy.Coin_count)
                         game_world.add_object(coin, 0)
+                        boy.cur_state = IdleState
+                        boy.dir = 1
+                        boy.velocity = 0
                         game_framework.push_state(stage4_state)
             elif boy.jump <0:
                 boy.jump_check = False
@@ -194,6 +206,9 @@ class RunState:
                         box1 = True
                         coin = Coin(boy.Coin_count)
                         game_world.add_object(coin, 0)
+                        boy.cur_state = IdleState
+                        boy.dir = 1
+                        boy.velocity = 0
                         game_framework.push_state(stage1_state)
                 elif boy.x >= 370 and boy.x <= 440:
 
@@ -202,6 +217,9 @@ class RunState:
                         box2 = True
                         coin = Coin(boy.Coin_count)
                         game_world.add_object(coin, 0)
+                        boy.cur_state = IdleState
+                        boy.dir = 1
+                        boy.velocity = 0
                         game_framework.push_state(stage2_state)
                 elif boy.x >= 570 and boy.x <= 640:
 
@@ -210,6 +228,9 @@ class RunState:
                         box3 = True
                         coin = Coin(boy.Coin_count)
                         game_world.add_object(coin, 0)
+                        boy.cur_state = IdleState
+                        boy.dir = 1
+                        boy.velocity = 0
                         game_framework.push_state(stage3_state)
                 elif boy.x >= 770 and boy.x <= 840:
 
