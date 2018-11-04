@@ -7,10 +7,10 @@ import stage3_state
 time_time = Main_Stage.time_time
 
 
-shape = [0,1,2,1,2,0,1,0,2,1]
+shape = [0,1,2,1,2,0,1,0,2,1,1]
 count =10
 Y = []
-for i in range(0, count):
+for i in range(0, count+1):
     Y.append(i * 150)
 class Back:
     def __init__(self):
@@ -59,7 +59,8 @@ class Shell:
                 self.image.clip_draw(108, 255, 60, 200, 610, 200+self.start++Y[j])
             elif shape[j] == 2:  # <-
                 self.image.clip_draw(5, 255, 60, 200, 420, 200+self.start+Y[j])
-
+            else:
+                self.image.clip_draw(5, 255, 60, 200, 420, 200 + self.start + Y[j])
 
 
 class Hero:
@@ -70,7 +71,7 @@ class Hero:
         self.timer =0
         self.minY=0
         self.HY=[]
-        for i in range(0, count):
+        for i in range(0, count+1):
             self.HY.append(i * 0)
     def update(self):
         global X,count,num,shape,plus
