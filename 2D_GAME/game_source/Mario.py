@@ -177,7 +177,7 @@ class RunState:
         if boy.Coin_count ==4:
             if event == UP_DOWN:
                 if boy.x > 920 and boy.x<1100:
-                    game_framework.exit()
+                    game_framework.quit()
     @staticmethod
     def exit(boy, event):
         if event == SPACE:
