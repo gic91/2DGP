@@ -7,13 +7,10 @@ import Main_Stage
 time_time = Main_Stage.time_time
 
 
-def makeshell(num,limit):
-    while num <= limit:
-        yield num
-        num += 1
+
 class Back:
     def __init__(self):
-        self.image = load_image('game_sprite\\stage1.png')
+        self.image = load_image('game_sprite\\stage3.png')
 
     def update(self):
         pass
