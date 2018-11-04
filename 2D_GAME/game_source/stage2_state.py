@@ -25,7 +25,7 @@ def enter():
     stage2_world.add_object(back, 0)
     stage2_world.add_object(time, 0)
     stage2_world.add_object(hero, 1)
-    stage2_world.add_object(bomb, 0)
+    stage2_world.add_object(bomb, 1)
 def exit():
     stage2_world.clear()
 
@@ -43,8 +43,6 @@ def handle_events():
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
-                game_framework.pop_state()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_LEFT:  # R
             key = 1
         elif event.type == SDL_KEYUP and event.key == SDLK_LEFT:  # R

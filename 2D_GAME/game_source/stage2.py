@@ -9,6 +9,11 @@ time_time = Main_Stage.time_time
 
 
 X=[]
+Y=[]
+count =10
+num=0
+shape=[0,1,2,1,2,0,1,2,0,2]
+plus =0
 class Back:
     def __init__(self):
         self.image = load_image('game_sprite\\stage2.png')
@@ -39,14 +44,32 @@ class Hero:
     def __init__(self):
         self.image = load_image('game_sprite\\stage2_item.png')
         self.state =0
+        for i in range(0,count):
+            Y.append(i*0)
+        num=0
     def update(self):
-        global X
+        global X,count,num,shape,plus
         if stage2_state.key ==1:
-            self.state = 1
+            self.state = 1#<-
+            for i in range(0,num):
+               if 1200-X[i] >=10 and 1200-X[i]<=100:
+                   if shape[i] ==0:
+                        Y[i] =800
+
         elif stage2_state.key ==2:
-            self.state = 2
+            self.state = 2#l
+            for i in range(0,num):
+               if 1200-X[i] >=10 and 1200-X[i]<=100:
+                   if shape[i] ==1:
+                        Y[i] =800
+
         elif stage2_state.key ==3:
-            self.state = 3
+            self.state = 3#->
+            for i in range(0,num):
+               if 1200-X[i] >=10 and 1200-X[i]<=100:
+                   if shape[i] ==2:
+                        Y[i] =800
+
         elif stage2_state.key ==4 or stage2_state.key ==5  or stage2_state.key ==6:
             self.state = 0
     def draw(self):
@@ -62,32 +85,34 @@ class Hero:
 
 class Bomb:
     def __init__(self):
-        global X
+        global X,count,num
         self.image = load_image('game_sprite\\stage2_item.png')
-        self.Y=[0,1,2,1,2,0,1,2,0,2]
+
         X=[]
-        self.count =10
-        for i in range(0,self.count):
+        for i in range(0,count):
             X.append(i*0)
         self.timer=0
-        self.num=0
+        num=0
     def update(self):
-        global X
+        global X,num
         self.timer +=1
         if self.timer %50 ==0:
             self.timer=0
-            self.num+=1
-            if self.num >10:
-                self.num=10
-        for i in range(0, self.num):
-            X[i] += 5
-
+            num+=1
+            if num >10:
+               num=10
+        for i in range(0, num):
+            X[i] += 7
+            if X[i] >=1210:
+                X[i] =10000
+        if X[count-1] >= 10000:
+            game_framework.pop_state()
     def draw(self):
-        global X
-        for j, i in enumerate(self.Y):
-            if self.Y[j]==0: #<-
-                self.image.clip_draw(0, 300, 50, 100, 1200-X[j], 560)
-            elif self.Y[j] == 1: #l
-                self.image.clip_draw(0, 300, 50, 100, 1200-X[j], 300)
-            elif self.Y[j] == 2: #->
-                self.image.clip_draw(0, 300, 50, 100, 1200-X[j], 430)
+        global X,shape
+        for j, i in enumerate(shape):
+            if shape[j]==0: #<-
+                self.image.clip_draw(0, 300, 50, 100, 1200-X[j], 560+Y[j])
+            elif shape[j] == 1: #l
+                self.image.clip_draw(0, 300, 50, 100, 1200-X[j], 300+Y[j])
+            elif shape[j] == 2: #->
+                self.image.clip_draw(0, 300, 50, 100, 1200-X[j], 430+Y[j])
