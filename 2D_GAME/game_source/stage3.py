@@ -53,42 +53,53 @@ class Shell:
     def draw(self):
         global shape,Y
         for j, i in enumerate(Y):
-            if shape[j] == 0:  # <-
+            if shape[j] == 0:  # ->
                 self.image.clip_draw(212, 255, 60, 200, 790, 200+self.start+Y[j])
             elif shape[j] == 1:  # l
                 self.image.clip_draw(108, 255, 60, 200, 610, 200+self.start++Y[j])
-            elif shape[j] == 2:  # ->
+            elif shape[j] == 2:  # <-
                 self.image.clip_draw(5, 255, 60, 200, 420, 200+self.start+Y[j])
 
-        self.image.clip_draw(6, 150, 40, 75, 700, 600)
+
 
 class Hero:
     def __init__(self):
         self.image = load_image('game_sprite\\stage3_item.png')
         self.state =0
+        self.num =0
 
     def update(self):
         global X,count,num,shape,plus
         if stage3_state.key ==1:
             self.state = 1#<-
-
-
+            if shape[self.num]==0:
+                self.num+=1
+                if self.num >= count:
+                    self.num += 0
         elif stage3_state.key ==2:
             self.state = 2#l
-
-
+            self.num += 1
+            if self.num >= count:
+                self.num = 0
         elif stage3_state.key ==3:
             self.state = 3#->
-
-
+            if shape[self.num] == 2:
+                self.num = 1
+            if self.num >= count:
+                self.num = 0
         elif stage3_state.key ==4 or stage3_state.key ==5  or stage3_state.key ==6:
-            self.state = 0
+                self.state = 0
+
+        for j in range(self.num,count):
+             Y[j] -=10
+
+
     def draw(self):
-        if self.state ==0: #<-
-            self.image.clip_draw(6, 150, 40, 75, 600,1560)
-        elif self.state == 1: #l
-            self.image.clip_draw(6, 150, 40, 75, 600,560)
-        elif self.state == 2: #->
-            self.image.clip_draw(6, 150, 40, 75, 600,300)
-        elif self.state == 3:
-            self.image.clip_draw(6, 150, 40, 75,600,430)
+        if self.state ==0:
+            self.image.clip_draw(6, 150, 40, 75, -1000,-1000)
+        elif self.state == 1: #<-
+            self.image.clip_draw(6, 150, 40, 75, 420,80+Y[self.num])
+        elif self.state == 2: #l
+            self.image.clip_draw(6, 150, 40, 75, 790,80+Y[self.num])
+        elif self.state == 3: #->
+            self.image.clip_draw(6, 150, 40, 75,610,80+Y[self.num])

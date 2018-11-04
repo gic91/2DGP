@@ -7,13 +7,15 @@ import game_framework
 import game_world
 import menu_world
 import game_state
+
+
 from Start_menu import Menu
 
 name = "MenuState"
 
 boy = None
 Start_menu = None
-
+menu_time =None
 def enter():
     global Start_menu
     Start_menu = Menu()
@@ -31,7 +33,7 @@ def resume():
 
 
 def handle_events():
-    global Start_menu
+    global Start_menu,menu_time
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -39,6 +41,7 @@ def handle_events():
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
                 game_framework.quit()
         elif Start_menu.start ==1:
+                menu_time =get_time()
                 game_framework.change_state(game_state)
 
                 #game_framework.quit()

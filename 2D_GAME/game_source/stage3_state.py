@@ -22,10 +22,10 @@ def enter():
     back = Back()
     shell = Shell()
     hero  = Hero()
-    stage3_world.add_object(time, 0)
     stage3_world.add_object(back, 0)
+    stage3_world.add_object(time, 0)
     stage3_world.add_object(shell, 0)
-    stage3_world.add_object(hero, 0)
+    stage3_world.add_object(hero, 1)
 def exit():
     stage3_world.clear()
 
