@@ -65,41 +65,57 @@ class Shell:
 class Hero:
     def __init__(self):
         self.image = load_image('game_sprite\\stage3_item.png')
-        self.state =0
-        self.num =0
-
+        self.state =2
+        self.num =1
+        self.timer =0
+        self.minY=0
+        self.HY=[]
+        for i in range(0, count):
+            self.HY.append(i * 0)
     def update(self):
         global X,count,num,shape,plus
+
+
         if stage3_state.key ==1:
             self.state = 1#<-
-            if shape[self.num]==0:
+            if shape[self.num]==2:
+                #if self.timer %40 ==0:
                 self.num+=1
                 if self.num >= count:
-                    self.num += 0
+                    game_framework.pop_state()
         elif stage3_state.key ==2:
             self.state = 2#l
-            self.num += 1
-            if self.num >= count:
-                self.num = 0
+            if shape[self.num] == 0:
+                #if self.timer % 40 == 0:
+                self.num += 1
+                if self.num >= count:
+                    game_framework.pop_state()
         elif stage3_state.key ==3:
             self.state = 3#->
-            if shape[self.num] == 2:
-                self.num = 1
-            if self.num >= count:
-                self.num = 0
-        elif stage3_state.key ==4 or stage3_state.key ==5  or stage3_state.key ==6:
-                self.state = 0
+            if shape[self.num] == 1:
+               # if self.timer % 40 == 0:
+                self.num += 1
+                if self.num >= count:
+                    game_framework.pop_state()
 
-        for j in range(self.num,count):
-             Y[j] -=10
+
+        for i in range(0,self.num):
+            if self.HY[self.num] >=Y[self.num] :
+                for j in range(self.num, count):
+                    self.HY[j] = Y[self.num]
+            else:
+                self.HY[self.num]+=1
+                for j in range(0,count):
+                    Y[j] = Y[j]- 10
+
+
 
 
     def draw(self):
-        if self.state ==0:
-            self.image.clip_draw(6, 150, 40, 75, -1000,-1000)
-        elif self.state == 1: #<-
-            self.image.clip_draw(6, 150, 40, 75, 420,80+Y[self.num])
-        elif self.state == 2: #l
-            self.image.clip_draw(6, 150, 40, 75, 790,80+Y[self.num])
-        elif self.state == 3: #->
-            self.image.clip_draw(6, 150, 40, 75,610,80+Y[self.num])
+
+        if self.state == 1: #<-
+            self.image.clip_draw(6, 150, 40, 75, 420,80+self.HY[self.num]-50)
+        elif self.state == 2: #->
+            self.image.clip_draw(6, 150, 40, 75, 790,80+self.HY[self.num]-50)
+        elif self.state == 3: #l
+            self.image.clip_draw(6, 150, 40, 75,610,80+self.HY[self.num]-50)
