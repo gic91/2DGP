@@ -69,16 +69,13 @@ class WalkingState:
         boy.frame = (boy.frame + FRAMES_PER_ACTION * ACTION_PER_TIME * game_framework.frame_time) % FRAMES_PER_ACTION
         boy.x += boy.x_velocity * game_framework.frame_time
         boy.y += boy.y_velocity * game_framework.frame_time
-        if boy.y <70:
-            boy.y =70
-        elif boy.y >1050:
-            boy.y =1050
-        left_m = (190/980)
-        right_m = (200/980)
-        if boy.x < 200:
-            boy.x = left_m * boy.y
-        if boy.x > 1650:
-            boy.x = 1650+(-right_m * boy.y)
+        move= (1053-70)/ (202-19)
+        b= move *19 -202
+
+        move2 = (1053-70)/(1836-1643)
+        b2 = move2*1836 - 1643
+        boy.x = clamp((boy.y-b)/move,boy.x,-((boy.y-b2)/move2)+300)
+        boy.y =clamp(70,boy.y,1070)
     @staticmethod
     def draw(boy):
         cx, cy = boy.x - boy.bg.window_left, boy.y - boy.bg.window_bottom
