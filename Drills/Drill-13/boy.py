@@ -73,7 +73,12 @@ class WalkingState:
             boy.y =70
         elif boy.y >1050:
             boy.y =1050
-
+        left_m = (190/980)
+        right_m = (200/980)
+        if boy.x < 200:
+            boy.x = left_m * boy.y
+        if boy.x > 1650:
+            boy.x = 1650+(-right_m * boy.y)
     @staticmethod
     def draw(boy):
         cx, cy = boy.x - boy.bg.window_left, boy.y - boy.bg.window_bottom
